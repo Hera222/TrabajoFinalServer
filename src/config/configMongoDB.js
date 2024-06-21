@@ -17,4 +17,4 @@ const MONGODB_URL = process.env.DB_MONGO_URI;
 mongoose
   .connect(MONGODB_URL, {})
   .then((bd) => console.log("Conexión exitosa a la BD de Mongoose"))
-  .catch((err) => console.log("Error de Conexión db de Mongo en el archivo configMongoDB ", err));
+  .catch((err) => console.log("Error de Conexión a la BD de Mongoose", err));

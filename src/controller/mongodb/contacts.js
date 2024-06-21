@@ -1,4 +1,4 @@
-const Matriculas = require("../../models/mongodb/contacts");
+const Contacts = require("../../models/mongodb/contacts");
 
 //**************************************************** */
 //     Busca de datos generales de la base de datos    //

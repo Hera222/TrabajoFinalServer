@@ -7,8 +7,6 @@ let DB_PASSWORD = dbConfig.password;
 let DB_HOST = dbConfig.host;
 let DB_PORT = dbConfig.port;
 
-console.log(DB_PORT, DB_DATABSE, DB_USER, DB_HOST, DB_PASSWORD);
-
 const sequelize = new Sequelize(DB_DATABSE, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
@@ -22,15 +20,16 @@ const sequelize = new Sequelize(DB_DATABSE, DB_USER, DB_PASSWORD, {
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Conectado a la base de datos MySQL");
+    console.log("Conectado a la Base de Datos de mysql");
   })
   .catch((err) => {
-    console.log("Error de Conexión a la Base de Datos..", err);
+    console.log("Error de Conexión a la Base de Datos", err);
   });
 
 const db = {};
 // db.Sequelize = Sequelize
 db.sequelize = sequelize;
+db.contact = require("../models/mysql/contact.js")(sequelize, DataTypes);
 db.courses = require("../models/mysql/couses.js")(sequelize, DataTypes);
 db.teachers = require("../models/mysql/teachers.js")(sequelize, DataTypes);
 db.students = require("../models/mysql/students.js")(sequelize, DataTypes);
