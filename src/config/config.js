@@ -27,7 +27,7 @@ password = process.env.DB_PASSWORD_PROD;
 database = process.env.DB_DATABASE_PROD;
 // }
 
-//const dialect = "mysql";
+const dialect = "";
 
 const pool = {
   max: 30,
@@ -40,6 +40,6 @@ module.exports = {
   user,
   password,
   database,
-  //dialect,
+  dialect,
   pool,
 };
