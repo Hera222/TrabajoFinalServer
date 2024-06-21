@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-/*const path = require("path");
+const path = require("path");
 require("dotenv").config({
   path: path.join(__dirname, "../envirome/devEnvirome.env"),
-});*/
+});
 
 const dbmonto_host = process.env.DB_MONGO_HOST;
 const dbmongo_db = process.env.DB_DATABASE;
