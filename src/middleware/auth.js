@@ -3,13 +3,12 @@ const jwt = require("jsonwebtoken");
 exports.isAuthenticated = async (req, res, next) => {
   const token = req.body.token;
   const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  console.log("user Token....:", user);
   req.user = user.id;
   if (!token) {
     return next(
       res.json({
         status: "401",
-        message: "Debe loguearse para utilizar esta funcción..",
+        message: "Debe loguearse para utilizar esta función.",
       })
     );
   }
@@ -23,23 +22,22 @@ exports.isSeller = async (req, res, next) => {
     return next(
       res.json({
         status: "401",
-        message: "Debe loguearse para utilizar esta recurso..",
+        message: "Debe loguearse para utilizar esta recurso.",
       })
     );
   }
-  next();
+ await next();
 };
 
 exports.isAdmin = (roles) => {
   return (req, res, next) => {
   const token = req.body.token;
   const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("Role..user..:", user.role);
     if (user.role !== roles) {
       return next(
         res.json({
           status: "401",
-          message: `como ${user.role} no puedes acceder a este recurso!`,
+          message: `Como ${user.role} no puedes acceder a este recurso!`,
         })
       );
     }

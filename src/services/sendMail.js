@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 exports.enviarMail = async (options) => {
-  // console.log("En envio de mail.....:", options);
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -26,8 +25,6 @@ exports.enviarMail = async (options) => {
     };
     // Enviar correo electrónico
     const info = await transporter.sendMail(mailOptions);
-    // console.log("Se ha enviado el correo electrónico correctamente.");
-    // console.log(info.response);
     return info.response;
   } catch (error) {
     console.log("Error al enviar el correo electrónico:", error);
