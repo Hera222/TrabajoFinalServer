@@ -44,4 +44,3 @@ function validarData(req, res, next) {
 }
 
 module.exports = router;
-
