@@ -27,8 +27,7 @@ password = process.env.DB_PASSWORD_PROD;
 database = process.env.DB_DATABASE_PROD;
 // }
 
-const dialect = "";
-//const dialect = "mysql";
+const dialect = "mysql";
 const pool = {
   max: 30,
   min: 0,
