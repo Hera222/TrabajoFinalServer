@@ -15,7 +15,7 @@ require("./config/configMongoDB.js");
 /* ******************************************** */
 /*   **** Sección de Middleware                 */
 /* ******************************************** */
-app.use(
+/*app.use(
   cors({
     origin: [
       "http://localhost:5173",
@@ -23,8 +23,8 @@ app.use(
     ],
     credentials: true,
   })
-);
-//app.use(cors());
+);*/
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -39,16 +39,16 @@ app.get("/", (req, res) => {
   res.status(200).sendFile(__dirname + "/public/html/welcome.html");
 });
 
-app.use("/api", require("./routes/json/contact.js"));
-app.use("/api", require("./routes/json/course.js"));
-app.use("/api", require("./routes/json/Student.js"));
-app.use("/api", require("./routes/json/Teacher.js"));
-app.use("/api", require("./routes/json/Matricula.js"));
+//app.use("/api", require("./routes/json/contact.js"));
+//app.use("/api", require("./routes/json/course.js"));
+//app.use("/api", require("./routes/json/Student.js"));
+//app.use("/api", require("./routes/json/Teacher.js"));
+//app.use("/api", require("./routes/json/Matricula.js"));
 
 // /* ************ acceso a las rutas de BD mysql ***********/
-app.use("/api/v2", require("./routes/mysql/course.js"));
-app.use("/api/v2", require("./routes/mysql/teacher.js"));
-app.use("/api/v2", require("./routes/mysql/users"));
+//app.use("/api/v2", require("./routes/mysql/course.js"));
+//app.use("/api/v2", require("./routes/mysql/teacher.js"));
+//app.use("/api/v2", require("./routes/mysql/users"));
 // app.use("/api/v2", require("./routes/mysql/Student.js"));
 // app.use("/api/v2", require("./routes/mysql/Matricula.js"));
 ///
@@ -78,6 +78,5 @@ app.get("/imagens/:img", function (req, res) {
 // });
 
 app.listen(port, () => {
-  /// console.log("Servidor disponible en  http://localhost:" + port);
   console.log("Servidor disponible en puerto ..:" + port);
 });

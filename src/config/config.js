@@ -10,14 +10,14 @@ let port = "";
 let host = "";
 let user = "";
 let password = "";
-let database = "";
+let database = "";/*
 if (process.env.NODE_ENV === "Desarrollo") {
   port = process.env.DB_PORT;
   host = process.env.DB_HOST;
   user = process.env.DB_USER;
   password = process.env.DB_PASSWORD;
   database = process.env.DB_DATABASE;
-}
+}*/
 
 // if (process.env.NODE_ENV === "Produccion") {
 port = process.env.DB_PORT_PROD;

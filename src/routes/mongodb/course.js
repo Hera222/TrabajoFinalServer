@@ -9,11 +9,10 @@ const {
   getCourseCodigo,
 } = require("../../controller/mongodb/courses");
 const { createCourseImg, CourseImg } = require("../../controller/mysql/images");
-// const { upload } = require("../../services/multer");
+
 const multer = require("multer");
 const path = require("path");
 
-console.log("Estoy aqui...en mullter.");
 const diskstorage = multer.diskStorage({
   destination: path.join(__dirname, "../../public/imagens/courses"),
 
