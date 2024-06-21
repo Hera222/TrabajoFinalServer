@@ -1,4 +1,3 @@
-// const bcrypt = require("bcrypt");
 const { generarJWT, verifyJWT } = require("../../services/general");
 const { enviarMail } = require("../../services/sendMail");
 const Users = require("../../models/mongodb/users");
@@ -90,12 +89,7 @@ const AddUser = async (req, res) => {
       .status(400)
       .json({ message: "El código indicado ya está registrado" });
   }
-  // let encritaClave = "";
-  // if (req.body.password) {
-  //   // encritaClave = await bcrypt.hash(req.body.password, 10);
-  //   encritaClave = await Users.encryptPassword(req.body.password);
-  // }
-  // console.log("Clave encriptada.....:", encritaClave);
+  
   const user = new Users({
     dni: req.body.dni,
     nombre: req.body.nombre,
@@ -120,7 +114,7 @@ const AddUser = async (req, res) => {
     res.status(201).json({
       status: "201",
       data: registro,
-      message: "El registro fué creado",
+      message: "El registro fue creado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -152,7 +146,7 @@ const upDateUser = async (req, res) => {
     );
     res.json({
       data: item_data,
-      message: "El registro fué Actualizado",
+      message: "El registro fue Actualizado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -198,7 +192,6 @@ const loginUser = async (req, res, next) => {
       status: "200",
       data: regNew,
     });
-    // console.log(res);
     return;
   }
 };
@@ -234,18 +227,14 @@ const loginTecher = async (req, res, next) => {
       status: "200",
       data: regNew,
     });
-    // console.log(res);
     return;
   }
 };
 
 const cambioClaveUser = async (req, res) => {
-  // console.log("Entre. body...:", req.body);
-  // console.log("Datos del token.....:", verifyJWT(req.body.token));
   let user = new Users();
   let encriClave = await user.encryptPassword(req.body.newPassword, 10);
   const usuario = await Users.findOne({ email: req.body.email });
-  // console.log("usuario..........:", usuario);
   if (!usuario) {
     return res
       .status(400)
@@ -262,7 +251,7 @@ const cambioClaveUser = async (req, res) => {
     }
     try {
       let encriClave = await user.encryptPassword(req.body.newPassword, 10);
-      const item_data = await Users.findByIdAndUpdate(usuario._id, {
+      const item_data = await Users.findByIdAndUpdate(usuario.id, {
         password: encriClave,
       });
       res.status(200).json({

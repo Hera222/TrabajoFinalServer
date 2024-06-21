@@ -109,11 +109,10 @@ const AddCourse = async (req, res) => {
 
   try {
     const registro = await course.save();
-    // const ressult = courseController(req, res);
     res.status(201).json({
       status: "201",
       data: registro,
-      message: "El registro fué creado",
+      message: "El registro fue creado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -155,7 +154,7 @@ const upDateCourse = async (req, res) => {
     // }
     res.json({
       data: course,
-      message: "El registro fué Actualizado",
+      message: "El registro fue Actualizado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

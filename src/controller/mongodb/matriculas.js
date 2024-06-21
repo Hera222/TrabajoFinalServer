@@ -118,7 +118,7 @@ const AddMatricula = async (req, res) => {
 
 const updateMatricula = async (req, res) => {
   const id = req.params.id;
-  const existeItem = await Matriculas.findOne({ _id: req.params.id });
+  const existeItem = await Matriculas.findOne({ id: req.params.id });
   try {
     if (existeItem.student !== req.body.student) {
       const existeItem = await Matriculas.findOne({
@@ -140,7 +140,7 @@ const updateMatricula = async (req, res) => {
 
     res.json({
       data: matricula,
-      message: "El registro fué Actualizado",
+      message: "El registro fue Actualizado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -101,7 +101,7 @@ const AddStudent = async (req, res) => {
     res.status(201).json({
       status: "201",
       data: registro,
-      message: "El registro fué creado",
+      message: "El registro fue creado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -120,13 +120,13 @@ const updateStudent = async (req, res) => {
       celular: req.body.celular,
       condicion: req.body.condicion,
     });
-    // if (req.body.password) {
+    
     student.password = await student.encryptPassword(req.body.password);
     const regStudent = await student.save();
-    // }
+    
     res.json({
       data: regStudent,
-      message: "El registro fué Actualizado",
+      message: "El registro fue Actualizado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

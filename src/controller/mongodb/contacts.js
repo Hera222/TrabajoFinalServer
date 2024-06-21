@@ -1,12 +1,12 @@
-const Teachers = require("../../models/mongodb/teachers");
+const Matriculas = require("../../models/mongodb/contacts");
 
 //**************************************************** */
 //     Busca de datos generales de la base de datos    //
 //**************************************************** */
 
-const getTeachers = async (req, res) => {
+const getContacts = async (req, res) => {
   try {
-    await Teachers.find().then((data) => {
+    await Contacts.find().then((data) => {
       res.status(200).json({ data: data, message: "Consulta exitosa" });
       return;
     });
@@ -19,29 +19,10 @@ const getTeachers = async (req, res) => {
 //     Busca de registro por id base de datos          //
 //**************************************************** */
 
-const getTeacher = async (req, res) => {
+const getContact = async (req, res) => {
   try {
-    const existeItem = await Teachers.findOne({ where: { id: req.params.id } });
-    if (existeItem) {
-      res.status(200).json({ data: existeItem, message: "Consulta exitosa" });
-      return;
-    }
-    if (!existeItem) {
-      res.status(400).json({ message: "El ID indicado no está registrado" });
-      return;
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-//**************************************************** */
-//  Busca de registro por DNI en la  base de datos  //
-//**************************************************** */
-
-const getTeacherDni = async (req, res) => {
-  try {
-    const existeItem = await Teachers.findOne({
-      where: { dni: req.params.dni },
+    const existeItem = await Contacts.findOne({
+      where: { id: req.params.id },
     });
     if (existeItem) {
       res.status(200).json({ data: existeItem, message: "Consulta exitosa" });
@@ -60,14 +41,14 @@ const getTeacherDni = async (req, res) => {
 //     Eliminación de registro por id en la BD          //
 //**************************************************** */
 
-const delTeacher = async (req, res) => {
-  const existeItem = await Teachers.findByIdAndDelete(req.params.id);
+const delContact = async (req, res) => {
+  const existeItem = await Contacts.findByIdAndDelete(req.params.id);
   if (!existeItem) {
     res.status(400).json({ message: "El ID indicado no está registrado" });
     return;
   }
   try {
-    await Teachers.destroy({ where: { id: req.params.id } });
+    await Contacts.destroy({ where: { id: req.params.id } });
     res.status(200).json({ message: "Registro Eliminado exitosamente" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -77,31 +58,30 @@ const delTeacher = async (req, res) => {
 //          Se crea registro en la BD                 //
 //**************************************************** */
 
-const AddTeacher = async (req, res) => {
-  const existeItem = await Teachers.findOne({ dni: req.body.dni });
+const AddContact = async (req, res) => {
+  const existeItem = await Contacts.findOne(req.params.id);
   if (existeItem) {
     return res
       .status(400)
-      .json({ message: "El código indicado ya está registrado" });
+      .json({ message: "El Contacto ya está registrado" });
   }
 
-  const teacher = new Teachers({
-    dni: req.body.dni,
+  const contact = new Contacts({
+    id: req.body.id,
     nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    adress: req.body.adress,
-    city: req.body.city,
     email: req.body.email,
     celular: req.body.celular,
+    city: req.body.city,
+    curso: req.body.curso,
+    message: req.body.message,
     condicion: req.body.condicion,
   });
-  teacher.password = await teacher.encryptPassword(req.body.password);
   try {
-    const registro = await teacher.save();
+    const registro = await contact.save();
     res.status(201).json({
       status: "201",
       data: registro,
-      message: "El registro fué creado",
+      message: "El registro fue creado",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -112,19 +92,31 @@ const AddTeacher = async (req, res) => {
 //          Se actualiza registro en archivo json           //
 //**************************************************** */
 
-const upDateTeacher = async (req, res) => {
+const updateContact = async (req, res) => {
   const id = req.params.id;
+  const existeItem = await Contacts.findOne({ id: req.params.id });
   try {
-    const teacher = await Teachers.findByIdAndUpdate(id, {
+    if (existeItem.contact !== req.body.contact) {
+      const existeItem = await Contacts.findOne({ id: req.params.id });
+      if (existeItem) {
+        return res
+          .status(400)
+          .json({ message: "El Mensaje ya está registrado" });
+      }
+    }
+    const contact = await Contacts.findByIdAndUpdate(id, {
+      id: req.body.id,
       nombre: req.body.nombre,
+      email: req.body.email,
       celular: req.body.celular,
+      city: req.body.city,
+      curso: req.body.curso,
+      message: req.body.message,
       condicion: req.body.condicion,
     });
-    teacher.password = await teacher.encryptPassword(req.body.password);
-    const regTeacher = await teacher.save()
-   
+
     res.json({
-      data: regTeacher,
+      data: contact,
       message: "El registro fue Actualizado",
     });
   } catch (error) {
@@ -133,10 +125,9 @@ const upDateTeacher = async (req, res) => {
 };
 
 module.exports = {
-  getTeachers,
-  getTeacher,
-  delTeacher,
-  AddTeacher,
-  upDateTeacher,
-  getTeacherDni,
+  getContacts,
+  getContact,
+  delContact,
+  AddContact,
+  updateContact,
 };
